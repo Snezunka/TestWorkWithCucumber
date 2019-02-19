@@ -18,6 +18,8 @@
         <aspectjCore.version>3.11.1</aspectjCore.version>
         <failsafe.version>1.1.1</failsafe.version>
         <awaitility.version>3.0.0</awaitility.version>
+        <allure-cucumber-jvm-adaptor.version>1.6.2</allure-cucumber-jvm-adaptor.version>
+        <allure-commons.version>1.4.23</allure-commons.version>
     </properties>
 
     <dependencies>
@@ -80,19 +82,12 @@
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-cucumber-jvm-adaptor</artifactId>
-            <version>1.6.2</version>
+            <version>${allure-cucumber-jvm-adaptor.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber-jvm</artifactId>
-            <version>2.8.1</version>
-        </dependency>
-
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-commons</artifactId>
-            <version>1.4.23</version>
+            <version>${allure-commons.version}</version>
         </dependency>
     </dependencies>
 
@@ -107,7 +102,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -118,17 +112,6 @@
                         -Dcucumber.options="--plugin extentions.AllureReporterExt"
                     </argLine>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <skip>false</skip>
-                        </configuration>
-                    </execution>
-                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
@@ -137,7 +120,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
             <plugin>
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-maven-plugin</artifactId>
