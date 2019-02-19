@@ -42,11 +42,13 @@ public class SearchResultsPage extends CucumberRunner {
         softAssert.assertThat(searchField.isDisplayed()).isTrue();
         softAssert.assertThat(linkResults.size()).isGreaterThan(0);
         softAssert.assertAll();
+        logger.info("'Search results' page is opened successfully");
     }
 
     public void clickOnFirstResultLink() {
         Optional<WebElement> firstResultLink = linkResults.stream().findFirst();
         firstResultLink.ifPresent(WebElement::click);
+        logger.info("Click on first result link");
     }
 
     public void fiveFirstSearchResultPagesShouldContain(String expectedDomain) {

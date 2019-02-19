@@ -11,7 +11,7 @@
     <properties>
         <selenium.version>3.14.0</selenium.version>
         <testng.version>6.14.3</testng.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <logback-classic.version>1.2.3</logback-classic.version>
         <cucumberjava.version>1.2.4</cucumberjava.version>
         <cucumbertestng.version>1.2.5</cucumbertestng.version>
         <aspectj.version>1.8.10</aspectj.version>
@@ -36,9 +36,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-classic.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

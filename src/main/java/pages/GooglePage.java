@@ -29,11 +29,13 @@ public class GooglePage extends CucumberRunner {
     public void googlePageShouldBeOpened() {
         driverWaiter.withTimeout(DriverTimeouts.MEDIUM_TIMEOUT).until(ExpectedConditions.visibilityOf(searchField));
         Assertions.assertThat(searchButton.isEnabled()).isTrue();
+        logger.info("Google page is opened successfully");
     }
 
     public void searchInGoogle(String searchText) {
         searchField.sendKeys(searchText);
         driverWaiter.withTimeout(DriverTimeouts.SHORT_TIMEOUT).until(ExpectedConditions.elementToBeClickable(searchButton));
         searchButton.click();
+        logger.info("Text " + searchText + " was search in google");
     }
 }

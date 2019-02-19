@@ -18,5 +18,6 @@ public class ResultPage extends CucumberRunner {
         Awaitility.await()
                 .atMost((10), TimeUnit.SECONDS)
                 .until(() -> driver.getTitle().toLowerCase().contains(text));
+        logger.info("Page title contains " + text);
     }
 }
