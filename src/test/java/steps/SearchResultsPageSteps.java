@@ -1,7 +1,6 @@
 package steps;
 
 import base.Utils;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import pages.SearchResultsPage;
@@ -24,7 +23,7 @@ public class SearchResultsPageSteps {
         searchResultsPage.clickOnFirstResultLink();
     }
 
-    @And("^Five first search results pages contain expected domain$")
+    @Then("^Five first search results pages contain expected domain$")
     public void fiveFirstSearchResultsPagesContainExpectedDomain() {
         String expectedDomain = Utils.getProperties("domain.properties").getProperty("expectedDomain");
         searchResultsPage.fiveFirstSearchResultPagesShouldContain(expectedDomain);

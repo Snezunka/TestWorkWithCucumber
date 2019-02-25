@@ -1,7 +1,6 @@
 package pages;
 
 import org.awaitility.Awaitility;
-import org.openqa.selenium.support.PageFactory;
 import org.slf4j.LoggerFactory;
 import runners.CucumberRunner;
 
@@ -10,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class ResultPage extends CucumberRunner {
 
     public ResultPage() {
-        PageFactory.initElements(driver, this);
+        initElements(this);
         logger = LoggerFactory.getLogger(ResultPage.class);
     }
 

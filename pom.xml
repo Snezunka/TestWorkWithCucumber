@@ -10,6 +10,7 @@
 
     <properties>
         <selenium.version>3.14.0</selenium.version>
+        <webdrivermanager.version>3.3.0</webdrivermanager.version>
         <testng.version>6.14.3</testng.version>
         <logback-classic.version>1.2.3</logback-classic.version>
         <cucumberjava.version>1.2.4</cucumberjava.version>
@@ -76,6 +77,12 @@
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
             <version>${awaitility.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
         </dependency>
 
         <!--Reporting-->

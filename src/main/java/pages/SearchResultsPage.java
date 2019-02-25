@@ -7,7 +7,6 @@ import org.awaitility.Awaitility;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.LoggerFactory;
 import runners.CucumberRunner;
@@ -19,9 +18,11 @@ import java.util.concurrent.TimeUnit;
 public class SearchResultsPage extends CucumberRunner {
 
     public SearchResultsPage() {
-        PageFactory.initElements(driver, this);
+        initElements(this);
         logger = LoggerFactory.getLogger(SearchResultsPage.class);
     }
+
+    private String pagePath = "//table[@id='nav']//a[@aria-label='Page ";
 
     @FindBy(name = "q")
     private WebElement searchField;
@@ -35,12 +36,11 @@ public class SearchResultsPage extends CucumberRunner {
     @FindBy(xpath = "//div[@class='rc']//cite")
     private List<WebElement> domainResults;
 
-
     public void searchResultsPageShouldBeOpened() {
         driverWaiter.withTimeout(DriverTimeouts.MEDIUM_TIMEOUT).until(ExpectedConditions.visibilityOf(navigationPanel));
         SoftAssertions softAssert = new SoftAssertions();
-        softAssert.assertThat(searchField.isDisplayed()).isTrue();
-        softAssert.assertThat(linkResults.size()).isGreaterThan(0);
+        softAssert.assertThat(searchField.isDisplayed()).isTrue().withFailMessage("'Search' field is not displayed");
+        softAssert.assertThat(linkResults.size()).isGreaterThan(0).withFailMessage("Number of link results should be > 0");
         softAssert.assertAll();
         logger.info("'Search results' page is opened successfully");
     }
@@ -81,6 +81,6 @@ public class SearchResultsPage extends CucumberRunner {
     }
 
     private By getPathForPage(int pageIndex) {
-        return By.xpath("//table[@id='nav']//a[@aria-label='Page " + pageIndex + "']");
+        return By.xpath(pagePath + pageIndex + "']");
     }
 }

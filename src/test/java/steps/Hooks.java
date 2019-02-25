@@ -6,8 +6,6 @@ import cucumber.api.java.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 public class Hooks {
 
     Logger logger = LoggerFactory.getLogger(Hooks.class);
@@ -16,11 +14,11 @@ public class Hooks {
     public void beforeScenario(Scenario scenario) {
         logger.info("**********************************************");
         logger.info("Start new test: " + scenario.getName());
+
     }
 
-
     @After("@Smoke")
-    public void afterAll(Scenario scenario) throws IOException {
+    public void afterAll(Scenario scenario) {
         if (scenario.isFailed()) {
             logger.error("Test " + scenario.getName() + " is failed.");
         }
