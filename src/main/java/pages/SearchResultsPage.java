@@ -51,7 +51,7 @@ public class SearchResultsPage extends CucumberRunner {
         logger.info("Click on first result link");
     }
 
-    public void fiveFirstSearchResultPagesShouldContain(String expectedDomain) {
+    public boolean fiveFirstSearchResultPagesShouldContain(String expectedDomain) {
         boolean isDomainPresent = false;
         int pageIndex = 1;
         int maxNumberOfSearchResultPages = 5;
@@ -59,12 +59,12 @@ public class SearchResultsPage extends CucumberRunner {
             isDomainPresent = domainResults.stream().anyMatch(domain -> domain.getText().contains(expectedDomain));
             if (isDomainPresent) {
                 logger.info("Domain " + expectedDomain + " is present on search result page with index " + pageIndex);
-                return;
-            } else if (pageIndex != maxNumberOfSearchResultPages ) {
+                break;
+            } else if (pageIndex != maxNumberOfSearchResultPages) {
                 goToPage(++pageIndex);
             } else ++pageIndex;
         }
-        Assertions.assertThat(isDomainPresent).withFailMessage("Domain " + expectedDomain + " is NOT present on first 5 pages of Search results").isTrue();
+        return isDomainPresent;
     }
 
     private void goToPage(int pageIndex) {

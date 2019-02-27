@@ -3,6 +3,7 @@ package steps;
 import base.Utils;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.assertj.core.api.Assertions;
 import pages.SearchResultsPage;
 
 public class SearchResultsPageSteps {
@@ -26,6 +27,8 @@ public class SearchResultsPageSteps {
     @Then("^Five first search results pages contain expected domain$")
     public void fiveFirstSearchResultsPagesContainExpectedDomain() {
         String expectedDomain = Utils.getProperties("domain.properties").getProperty("expectedDomain");
-        searchResultsPage.fiveFirstSearchResultPagesShouldContain(expectedDomain);
+        Assertions.assertThat(searchResultsPage.fiveFirstSearchResultPagesShouldContain(expectedDomain))
+                .withFailMessage("Domain " + expectedDomain + " is NOT present on first 5 pages of Search results")
+                .isTrue();
     }
 }
