@@ -1,21 +1,19 @@
 package pages;
 
+import base.DriverFactory;
 import base.DriverTimeouts;
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.SoftAssertions;
 import org.awaitility.Awaitility;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.LoggerFactory;
-import runners.CucumberRunner;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class SearchResultsPage extends CucumberRunner {
+public class SearchResultsPage extends DriverFactory {
 
     public SearchResultsPage() {
         initElements(this);
@@ -36,13 +34,8 @@ public class SearchResultsPage extends CucumberRunner {
     @FindBy(xpath = "//div[@class='rc']//cite")
     private List<WebElement> domainResults;
 
-    public void searchResultsPageShouldBeOpened() {
-        driverWaiter.withTimeout(DriverTimeouts.MEDIUM_TIMEOUT).until(ExpectedConditions.visibilityOf(navigationPanel));
-        SoftAssertions softAssert = new SoftAssertions();
-        softAssert.assertThat(searchField.isDisplayed()).isTrue().withFailMessage("'Search' field is not displayed");
-        softAssert.assertThat(linkResults.size()).isGreaterThan(0).withFailMessage("Number of link results should be > 0");
-        softAssert.assertAll();
-        logger.info("'Search results' page is opened successfully");
+    public void waitUntilNavigationPanelIsVisible() {
+        driverWaiter.until(ExpectedConditions.visibilityOf(navigationPanel));
     }
 
     public void clickOnFirstResultLink() {
@@ -51,16 +44,15 @@ public class SearchResultsPage extends CucumberRunner {
         logger.info("Click on first result link");
     }
 
-    public boolean fiveFirstSearchResultPagesShouldContain(String expectedDomain) {
+    public boolean fiveFirstSearchResultPagesShouldContain(int numberOfSearchResultPages, String expectedDomain) {
         boolean isDomainPresent = false;
         int pageIndex = 1;
-        int maxNumberOfSearchResultPages = 5;
-        while(pageIndex <= maxNumberOfSearchResultPages ) {
+        while(pageIndex <= numberOfSearchResultPages ) {
             isDomainPresent = domainResults.stream().anyMatch(domain -> domain.getText().contains(expectedDomain));
             if (isDomainPresent) {
                 logger.info("Domain " + expectedDomain + " is present on search result page with index " + pageIndex);
                 break;
-            } else if (pageIndex != maxNumberOfSearchResultPages) {
+            } else if (pageIndex != numberOfSearchResultPages) {
                 goToPage(++pageIndex);
             } else ++pageIndex;
         }
@@ -76,7 +68,7 @@ public class SearchResultsPage extends CucumberRunner {
 
     private void waitSearchResultsOnNewPageLoad() {
         Awaitility.await()
-                .atMost((10000), TimeUnit.MILLISECONDS)
+                .atMost(DriverTimeouts.MEDIUM_TIMEOUT.getSeconds(), TimeUnit.SECONDS)
                 .until(() -> domainResults.size() > 0);
     }
 

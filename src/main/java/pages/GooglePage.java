@@ -1,12 +1,12 @@
 package pages;
 
+import base.DriverFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.LoggerFactory;
-import runners.CucumberRunner;
 
-public class GooglePage extends CucumberRunner {
+public class GooglePage extends DriverFactory {
 
     public GooglePage() {
         initElements(this);
@@ -22,7 +22,6 @@ public class GooglePage extends CucumberRunner {
     public void openPage(String url) {
         driver.get(url);
     }
-
 
     public void searchInGoogle(String searchText) {
         driverWaiter.until(ExpectedConditions.visibilityOf(searchField));
